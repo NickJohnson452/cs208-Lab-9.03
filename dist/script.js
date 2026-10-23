@@ -54,3 +54,42 @@ document.addEventListener("DOMContentLoaded", function() {
             jokeDisplay.textContent = joke;
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const submitBtn = document.querySelector('input[type="submit"]');
+    if (submitBtn) {
+        submitBtn.addEventListener("click", myLineUp);
+    }
+});
+
+// Function to handle form submission and data
+function myLineUp(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Retrieve status radio button
+    const statusInput = document.querySelector('input[name="status"]:checked');
+    const status = statusInput ? statusInput.value : "None";
+
+    // Retrieve game date
+    const gameDateSelect = document.getElementById("gameDate");
+    const gameDate = gameDateSelect ? gameDateSelect.value : "None";
+
+    // Retrieve all checked players
+    const playerCheckboxes = document.querySelectorAll('input[name="players"]:checked');
+    const selectedPlayers = Array.from(playerCheckboxes).map(cb => cb.value);
+
+    // Print all data to the console
+    console.log("Status:", status);
+    console.log("Game Date:", gameDate);
+    console.log("Players:", selectedPlayers);
+
+    // Bring all information togeather into a single string
+    const playersString = selectedPlayers.length > 0 ? selectedPlayers.join(", ") : "None";
+    const summaryString = `Status: ${status} | Date: ${gameDate} | Players: ${playersString}`;
+
+    // Update the HTML page with the string
+    const outputElement = document.getElementById("output");
+    if (outputElement) {
+        outputElement.textContent = summaryString;
+    }
+}
